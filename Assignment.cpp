@@ -27,11 +27,12 @@ private:
 
 string id;
 string owner;
-string location;        // Lack description
+string location;        
 string type;
 double rate;
 string status;
 string requested;
+string description;
 
 public:
 
