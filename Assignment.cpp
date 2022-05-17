@@ -45,3 +45,7 @@ string pwd;
 public:
 
 };
+
+int main(){
+  
+}
