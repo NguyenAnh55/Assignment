@@ -1,0 +1,3 @@
+id,owner,location,type,rating,status
+001,Cain,Nha Trang,villa,5.4,vaccant
+002,Mei,Da Nang,apartment,6.4,occupied
