@@ -5,6 +5,8 @@
 #include <string>
 #include "Member.h"
 #include "House.h"
+#include "Member.cpp"
+#include "House.cpp"
 
 using namespace std;
 string file_txt_name;
@@ -145,6 +147,7 @@ void store_house_data() {
 
 
 int main(){
+    //cout << "Testing";
     store_member_data();
     return 0;
 }
