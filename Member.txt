@@ -1,0 +1,3 @@
+#id,name,phone number,house location,credits,occupier rating,requests
+001,Cain,0903464969,Nha Trang,25,5,Vacant
+002,Lama,0906535324,Da Nang,40,5,Unvacant
