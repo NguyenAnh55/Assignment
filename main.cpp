@@ -90,6 +90,65 @@ vector<string> Register() {
 
     return account;
 }
+
+vector<string> HouseRegister() {
+    //create new house
+    string input;
+
+    vector<string> house;
+
+    //validate user id
+    cout << "Enter your house id:";
+    getline(cin, input);
+    while (isEmpty(input)) {
+        cout << "\n" <<"Please choose an id:";
+        getline(cin, input);
+    }
+    while (!isPositiveInteger(input)) {
+        cout << "\n" << "Id must be a positive integer:";
+        getline(cin, input);
+    }
+    while (ifMemberIdExisted(input)) {
+        cout << "\n" << "This id has been taken, choose another one:";
+        getline(cin, input);
+    }
+    house.push_back(input);
+    input.clear();
+    //input owner
+    cout << "\n" << "Enter the owner of the house:";
+    getline(cin, input);
+    while (isEmpty(input)) {
+        cout << "\n" << "Please enter a name";
+        getline(cin, input);
+    }
+    house.push_back(input);
+    input.clear();
+    //validate location
+    cout << "\n" << "Enter the house location:";
+    getline(cin, input);
+    while (isEmpty(input)) {
+        cout << "\n" << "House location is required:";
+        getline(cin, input);
+    }
+    while (ifLocationExisted(input)) {
+        cout << "\n" << "This location has bees registered, enter another one:";
+        getline(cin, input);
+    }
+    house.push_back(input);
+    input.clear();
+    //input house type
+    cout << "\n" << "Enter the house type:";
+    getline(cin, input);
+    while (isEmpty(input)) {
+        cout << "\n" << "House type is required:";
+        getline(cin, input);
+    }
+    house.push_back(input);
+    input.clear();
+
+    return house;
+}
+
 string join(vector<string> const& strings, string delim)
 {
     stringstream ss;
@@ -97,6 +156,7 @@ string join(vector<string> const& strings, string delim)
          ostream_iterator<string>(ss, delim.c_str()));
     return ss.str();
 }
+
 string toCSV() {
     Member* j = new Member;
     vector<string> account = Register();
@@ -110,6 +170,18 @@ string toCSV() {
     //cout << str << endl;
     return str + total;
 }
+
+string houseToCSV() {
+    House* h = new House;
+    vector<string> house = HouseRegister();
+    string delim = ",";
+    string str = join(house, delim);
+    string rating = "5.0";
+    string houseStatus = ",vaccant";
+    //cout << str << endl;
+    return str + rating + houseStatus;
+}
+
 int apppendToCSV() {
     string newline = toCSV();
     ofstream foutput;
@@ -124,6 +196,23 @@ int apppendToCSV() {
     finput.close();
     foutput.close();
     cout << "your account has been succesfully created" << endl;
+    return 0;
+}
+
+int houseApppendToCSV() {
+    string newline = houseToCSV();
+    ofstream foutput;
+    ifstream finput;
+
+    finput.open("House.txt");
+    foutput.open("House.txt", ios::app);
+
+    if (finput.is_open()) {
+        foutput << newline << "\n";
+    }
+    finput.close();
+    foutput.close();
+    cout << "Your house has successfully registered" << endl;
     return 0;
 }
 
@@ -265,7 +354,7 @@ void member(Member* m,int mem_num, House* h, int house_quant, string user_id) {
                 break;
             case 2:
                 cin.ignore();
-                cout << "Still developing!";
+                houseApppendToCSV();
                 break;
             case 3:
                 cin.ignore();
