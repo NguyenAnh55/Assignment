@@ -5,9 +5,13 @@
 #include <string>
 #include <iterator>
 #include <algorithm>
+#include "Member.cpp"
 #include "Member.h"
+#include "House.cpp"
 #include "House.h"
+#include "validator.cpp"
 #include "validator.h"
+#include "Secret.cpp"
 #include "Secret.h"
 
 using namespace std;
@@ -133,6 +137,66 @@ void all_member(Member* m, int num) {
     }
 }
 
+int showInfor(){
+    vector<vector<string>> content;
+    vector<string> row;
+    string line, word;
+
+
+
+    fstream file("House.txt");
+    if (file.is_open())
+    {
+    while (getline(file, line))
+    {
+    row.clear();
+
+
+
+    stringstream str(line);
+
+
+
+    while (getline(str, word, ','))
+    row.push_back(word);
+    content.push_back(row);
+    }
+    }
+    else
+    cout << "Could not open the file\n";
+
+
+
+    for (int i = 0; i < content.size(); i++)
+    {
+    for (int j = 0; j < 4; j++)
+    {
+    cout << content[i][j] << " ";
+    }
+    cout << "\n";
+    }
+
+
+
+return 0;
+}
+
+void showMember(Member* m, int mem_num, string user_id){
+
+    for(int i=0; i < mem_num;i++) {
+
+        if(user_id == m[i].getId()){
+
+            cout << "Your information: \n";
+            m[i].printInfo();
+        }
+            
+    }
+
+}
+
+
+
 void all_house(House* h, int num) {
     cout << "Here are all house information: " << endl;
     int index = 1;
@@ -188,7 +252,45 @@ void admin_menu(Member* m,int mem_num, House* h, int house_quant) {
     }
 }
 void member(Member* m,int mem_num, House* h, int house_quant, string user_id) {
-    cout << "hi";
+    int choice;
+    while (choice !=6) {
+        cout << "\n" << "Here is the menu for member:" << endl;
+        cout << "1. View your info\n" << "2. House listing/unlisting (with consuming points, and minimum required occupier rating)\n" << "3. Search for suitable house\n" << "4. Request occupy\n" << "5. View all request to listed house\n" << "6. Log out" << endl;
+        cout << "Enter your choice:";
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                cin.ignore();
+                showMember(m, mem_num, user_id);
+                break;
+            case 2:
+                cin.ignore();
+                cout << "Still developing!";
+                break;
+            case 3:
+                cin.ignore();
+                cout << "Still developing!";
+                break;
+            case 4:
+                cin.ignore();
+                cout << "Still developing!";
+                break;
+            case 5:
+                cin.ignore();
+                cout <<"Still developing!";
+                break;
+            case 6:
+                cin.ignore();
+                cout << "Bye bye!" << endl;
+                break;
+            default:
+                cout << "Error: Please choose the number in the range from 1 to 6. \n";
+                cout << "Please re-type your choice here:";
+                cin >> choice;
+                cin.ignore();
+                break;
+        }
+    }
 }
 void non_mem_menu(Member* m,int mem_num, House* h, int house_quant) {
     int choice;
@@ -200,7 +302,7 @@ void non_mem_menu(Member* m,int mem_num, House* h, int house_quant) {
         switch (choice) {
             case 1:
                 cin.ignore();
-                all_house(h, house_quant);
+                showInfor();
                 break;
             case 2:
                 cin.ignore();
