@@ -5,8 +5,11 @@
 #include <string>
 #include <iterator>
 #include <algorithm>
+#include "Member.cpp"
+#include "House.cpp"
 #include "Member.h"
 #include "House.h"
+#include "validator.cpp"
 #include "validator.h"
 
 using namespace std;
@@ -105,6 +108,51 @@ string toCSV() {
     //cout << str << endl;
     return str + total;
 }
+
+int showInfor(){
+    vector<vector<string>> content;
+    vector<string> row;
+    string line, word;
+
+
+
+    fstream file("House.txt");
+    if (file.is_open())
+    {
+    while (getline(file, line))
+    {
+    row.clear();
+
+
+
+    stringstream str(line);
+
+
+
+    while (getline(str, word, ','))
+    row.push_back(word);
+    content.push_back(row);
+    }
+    }
+    else
+    cout << "Could not open the file\n";
+
+
+
+    for (int i = 0; i < content.size(); i++)
+    {
+    for (int j = 0; j < 4; j++)
+    {
+    cout << content[i][j] << " ";
+    }
+    cout << "\n";
+    }
+
+
+
+return 0;
+}
+
 int apppendToCSV() {
     string newline = toCSV();
     ofstream foutput;
@@ -141,6 +189,7 @@ void all_house(House* h, int num) {
         index++;
     }
 }
+
 
 void admin_menu(Member* m,int mem_num, House* h, int house_quant) {
     string username = "kell";
@@ -190,14 +239,14 @@ void admin_menu(Member* m,int mem_num, House* h, int house_quant) {
 void non_mem_menu(Member* m,int mem_num, House* h, int house_quant) {
     int choice;
     while (choice !=3) {
-        cout << "\n" << "Here is the menu for admin:" << endl;
+        cout << "\n" << "Here is the menu for guest:" << endl;
         cout << "1. View all houses\n" << "2. Register member\n" << "3. Log out" << endl;
         cout << "Enter your choice:";
         cin >> choice;
         switch (choice) {
             case 1:
                 cin.ignore();
-                all_house(h, house_quant);
+                showInfor();
                 break;
             case 2:
                 cin.ignore();
