@@ -1,3 +1,6 @@
-#id,name,phone number,house location,credits,occupier rating,requests
-001,Cain,0903464969,Nha Trang,25,5,Vacant
-002,Lama,0906535324,Da Nang,40,5,Unvacant
+id,name,phone number,address,house type,credits,occupier rating,requests quantity,requests
+001,Cain,0903464969,48 Nguyen Thi Thap,School,25,5,1,Cain
+002,Lama,0906535324,56 Nguyen Van Linh,Office,40,5,1,Ha
+003,Lama,0906535324,56 Nguyen Van Linh,Office,40,5,1,Ha
+009,kell,0907777888,87 Nha Trang,Apartment,500.000000,0.000000,0,None
+008,Kell,0908887755,Cat Lai,Apartment,500.000000,0.000000,0,None
