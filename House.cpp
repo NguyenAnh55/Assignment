@@ -89,4 +89,3 @@ ostream& operator<< (ostream& out, House& e) {
 }//
 // Created by user on 21/05/2022.
 //
-
