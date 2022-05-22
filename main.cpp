@@ -5,12 +5,10 @@
 #include <string>
 #include <iterator>
 #include <algorithm>
-#include "Member.cpp"
-#include "House.cpp"
 #include "Member.h"
 #include "House.h"
-#include "validator.cpp"
 #include "validator.h"
+#include "Secret.h"
 
 using namespace std;
 string file_txt_name;
@@ -108,51 +106,6 @@ string toCSV() {
     //cout << str << endl;
     return str + total;
 }
-
-int showInfor(){
-    vector<vector<string>> content;
-    vector<string> row;
-    string line, word;
-
-
-
-    fstream file("House.txt");
-    if (file.is_open())
-    {
-    while (getline(file, line))
-    {
-    row.clear();
-
-
-
-    stringstream str(line);
-
-
-
-    while (getline(str, word, ','))
-    row.push_back(word);
-    content.push_back(row);
-    }
-    }
-    else
-    cout << "Could not open the file\n";
-
-
-
-    for (int i = 0; i < content.size(); i++)
-    {
-    for (int j = 0; j < 4; j++)
-    {
-    cout << content[i][j] << " ";
-    }
-    cout << "\n";
-    }
-
-
-
-return 0;
-}
-
 int apppendToCSV() {
     string newline = toCSV();
     ofstream foutput;
@@ -189,7 +142,6 @@ void all_house(House* h, int num) {
         index++;
     }
 }
-
 
 void admin_menu(Member* m,int mem_num, House* h, int house_quant) {
     string username = "kell";
@@ -235,18 +187,20 @@ void admin_menu(Member* m,int mem_num, House* h, int house_quant) {
         }
     }
 }
-
+void member(Member* m,int mem_num, House* h, int house_quant, string user_id) {
+    cout << "hi";
+}
 void non_mem_menu(Member* m,int mem_num, House* h, int house_quant) {
     int choice;
     while (choice !=3) {
-        cout << "\n" << "Here is the menu for guest:" << endl;
-        cout << "1. View all houses\n" << "2. Register member\n" << "3. Log out" << endl;
+        cout << "\n" << "Here is the menu for non-member:" << endl;
+        cout << "1. View all house\n" << "2. Register member\n" << "3. Log out" << endl;
         cout << "Enter your choice:";
         cin >> choice;
         switch (choice) {
             case 1:
                 cin.ignore();
-                showInfor();
+                all_house(h, house_quant);
                 break;
             case 2:
                 cin.ignore();
@@ -266,10 +220,56 @@ void non_mem_menu(Member* m,int mem_num, House* h, int house_quant) {
     }
 }
 
+void check_user_pass(string name, string pass, Member* m,int mem_num, House* h, int house_quant) {
+    //Create empty variable to store data later
+    string id, user_name, pwd, user_id;
+    file_txt_name = "Secret.txt";
+    vector<string> id_list;
+    vector<string> user_list;
+    vector<string> pwd_list;
+
+    int index = 0;
+    ifstream file(file_txt_name);
+    if (file.is_open()) {
+        string line;
+        getline(file,line);
+        while (!file.eof())
+        {
+            getline(file, id, ',');
+            id_list.push_back(id);
+            getline(file, user_name, ',');
+            user_list.push_back(user_name);
+            getline(file, pwd, '\n');
+            pwd_list.push_back(pwd);
+            index++;
+        }
+        file.close();
+    }
+
+    else {
+        cerr << "Unable to open file!" << endl;
+    }
+    while (index != 0){
+        for(int i=0; i < user_list.size();i++){
+            if(name == user_list[i] && pass == pwd_list[i]) {
+                user_id = id_list[i];
+                index = 0;
+            }
+        }
+        if (index != 0) {
+            cerr << "Wrong username or pass" << endl;
+            cout << "Please re-enter the username here:";
+            cin >> name;
+            cout << "Please re-enter password here:";
+            cin>> pass;
+        }
+    }
+    member(m,mem_num,h,house_quant,user_id);
+}
 
 void menu(Member* m,int mem_num, House* h, int house_quant) {
     int choice;
-    int user_input = 0;
+    string user_name, pwd;
     string customer_type = "";
     cout << "EEET2482/COSC2082 ASSIGNMEN\nVACATION HOUSE EXCHANGE APPLICATION \n" << endl;
     //Display the menu and alow user choose the option
@@ -293,7 +293,11 @@ void menu(Member* m,int mem_num, House* h, int house_quant) {
         non_mem_menu(m, mem_num,h,house_quant);
     }
     else if (choice == 2) {
-
+        cout << "Enter your user name here:";
+        cin >> user_name;
+        cout << "Enter your pass here:";
+        cin >> pwd;
+        check_user_pass(user_name,pwd,m,mem_num,h,house_quant);
     }else {
         admin_menu(m, mem_num,h,house_quant);
     }
@@ -319,7 +323,6 @@ int read_file(string file_name) {
     file.close();
     return row;
 }
-
 
 void store_member_data(House* h, int house_num) {
     //Create empty variable to store data later
@@ -385,6 +388,7 @@ void store_member_data(House* h, int house_num) {
             } else{
                 getline(file, request, '\n');
                 m[index] = Member(id_list[index], name_list[index], p_list[index], address_list[index], house_type_list[index], credit_list[index], occ_rating_list[index], request_quantity_list[index], request_list);
+                request_list.clear();
                 index++;
             }
 
