@@ -17,6 +17,8 @@
 using namespace std;
 string file_txt_name;
 
+
+//Creating a register method for user
 vector<string> Register() {
     //create new member
     string input;
@@ -91,6 +93,7 @@ vector<string> Register() {
     return account;
 }
 
+//Creating a regiseter method for house
 vector<string> HouseRegister() {
     //create new house
     string input;
@@ -149,6 +152,7 @@ vector<string> HouseRegister() {
     return house;
 }
 
+//Creating a join
 string join(vector<string> const& strings, string delim)
 {
     stringstream ss;
@@ -157,6 +161,7 @@ string join(vector<string> const& strings, string delim)
     return ss.str();
 }
 
+//Creating a toCSV method to add the ratings and adjust-able variables
 string toCSV() {
     Member* j = new Member;
     vector<string> account = Register();
@@ -171,6 +176,7 @@ string toCSV() {
     return str + total;
 }
 
+//Creating a houseToCSV method to add the ratings and adjust-able variables
 string houseToCSV() {
     House* h = new House;
     vector<string> house = HouseRegister();
@@ -182,6 +188,7 @@ string houseToCSV() {
     return str + rating + houseStatus;
 }
 
+//Creating a method to append the variables to the txt file
 int apppendToCSV() {
     string newline = toCSV();
     ofstream foutput;
@@ -199,6 +206,7 @@ int apppendToCSV() {
     return 0;
 }
 
+//Creating a method to append the variables to the txt file
 int houseApppendToCSV() {
     string newline = houseToCSV();
     ofstream foutput;
@@ -216,6 +224,7 @@ int houseApppendToCSV() {
     return 0;
 }
 
+//Creating a method to print out all the members' information
 void all_member(Member* m, int num) {
     cout << "Here are all the customers:" << endl;
     int index = 1;
@@ -226,6 +235,7 @@ void all_member(Member* m, int num) {
     }
 }
 
+//Creating a method to show specific informations from txt file
 int showInfor(){
     vector<vector<string>> content;
     vector<string> row;
@@ -270,6 +280,7 @@ int showInfor(){
 return 0;
 }
 
+//Creating a method to show a specific member based on ID
 void showMember(Member* m, int mem_num, string user_id){
 
     for(int i=0; i < mem_num;i++) {
@@ -285,7 +296,7 @@ void showMember(Member* m, int mem_num, string user_id){
 }
 
 
-
+//Creating a method that shows all the house information
 void all_house(House* h, int num) {
     cout << "Here are all house information: " << endl;
     int index = 1;
@@ -296,6 +307,7 @@ void all_house(House* h, int num) {
     }
 }
 
+//Creating the admin menu
 void admin_menu(Member* m,int mem_num, House* h, int house_quant) {
     string username = "kell";
     string pwd = "12345";
@@ -340,6 +352,8 @@ void admin_menu(Member* m,int mem_num, House* h, int house_quant) {
         }
     }
 }
+
+//Creating the member menu
 void member(Member* m,int mem_num, House* h, int house_quant, string user_id) {
     int choice;
     while (choice !=6) {
@@ -381,6 +395,19 @@ void member(Member* m,int mem_num, House* h, int house_quant, string user_id) {
         }
     }
 }
+
+// void searchHouse (Member* a, vector<House> b){
+//     for (int i = 0; i < b.size(); i++)
+//     {
+//         if (a->getOcc_rate() >= b[i] -> rating && a -> credit >= b[i] ->house_credit  && b -> status == true)
+//         {
+//             cout << "The house with ID" << b -> id << " is suitable\n"
+//         } 
+//     }
+// }
+
+
+//Creating a guest menu
 void non_mem_menu(Member* m,int mem_num, House* h, int house_quant) {
     int choice;
     while (choice !=3) {
@@ -411,6 +438,7 @@ void non_mem_menu(Member* m,int mem_num, House* h, int house_quant) {
     }
 }
 
+//Creating a method to check user's password/id
 void check_user_pass(string name, string pass, Member* m,int mem_num, House* h, int house_quant) {
     //Create empty variable to store data later
     string id, user_name, pwd, user_id;
@@ -458,6 +486,7 @@ void check_user_pass(string name, string pass, Member* m,int mem_num, House* h, 
     member(m,mem_num,h,house_quant,user_id);
 }
 
+//Creating the system menu
 void menu(Member* m,int mem_num, House* h, int house_quant) {
     int choice;
     string user_name, pwd;
@@ -494,6 +523,7 @@ void menu(Member* m,int mem_num, House* h, int house_quant) {
     }
 }
 
+//Creating a method that reads files
 int read_file(string file_name) {
     int row = 0;
     ifstream file;
@@ -515,6 +545,7 @@ int read_file(string file_name) {
     return row;
 }
 
+//Creating a method that stores member's data
 void store_member_data(House* h, int house_num) {
     //Create empty variable to store data later
     string id, name, p_number, address, house_type, credit, occ_rating, request_quantity,request;

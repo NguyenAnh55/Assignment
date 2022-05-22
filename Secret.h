@@ -7,10 +7,13 @@ using namespace std;
 #define UNTITLED3_SECRET_H
 
 class Secret{
+    //Creating attributes for class Secret
 protected:
     string id;
     string user_name;
     string pwd;
+
+    //Creating constructors for the class
 public:
     Secret();
     Secret(Secret& s);
